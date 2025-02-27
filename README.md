@@ -19,6 +19,12 @@ python -m venv venv
 
 Then, select the `venv` as the current Python version in the VSCode project.
 
+Finally, install the dependencies running the following command in the terminal:
+
+```bash
+pip install -r requirements.txt
+```
+
 Official documentation: https://docs.python.org/3/library/venv.html
 
 ## Setup the .env file
