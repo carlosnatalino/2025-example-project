@@ -1,6 +1,8 @@
 # Example project for the final project of the EEN060/EEN065 courses
 
-
+<h2 style="color: red;">
+Attention! You must not clone this repository. Instead, you must create a private one using this as a template.
+</h2>
 
 Example of the final project of EEN060/EEN065 courses.
 Note that this project is only for your reference.
