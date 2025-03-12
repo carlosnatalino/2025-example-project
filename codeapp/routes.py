@@ -54,7 +54,7 @@ def home() -> Response:
     )
 
     # render the page
-    return render_template("home.html", table=bootstrap_table)
+    return render_template("home.html", counter=counter, table=bootstrap_table)
 
 
 @bp.get("/data/")
@@ -64,7 +64,7 @@ def data() -> Response:
 
     # generate the table
     html_table = tabulate(
-        dataset[0:100],
+        dataset[0:1000],
         headers=[
             "ID",
             "Type",
@@ -88,7 +88,7 @@ def data() -> Response:
     )
 
     # render the page
-    return render_template("data.html", html=bootstrap_table)
+    return render_template("data.html", data=dataset, html=bootstrap_table)
 
 
 @bp.get("/image")

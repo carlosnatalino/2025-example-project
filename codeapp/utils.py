@@ -1,7 +1,6 @@
 # built-in imports
 from datetime import date, datetime
 import collections
-import math
 import pickle
 
 # external imports
@@ -22,17 +21,24 @@ def get_data_list() -> list[Show]:
     ##### check if dataset already exists, and if so, return the existing dataset  #####
     # db.delete("dataset_list")  # uncomment if you want to force deletion
     if db.exists("dataset_list") > 0:  # checks if the `dataset` key already exists
-        current_app.logger.info("Dataset already downloaded.")
+        current_app.logger.info(
+            "Dataset already downloaded. "
+            f"{db.llen('dataset_list')} items in the database"
+        )
         dataset_stored: list[Show] = []  # empty list to be returned
         raw_dataset: list[bytes] = db.lrange("dataset_list", 0, -1)  # get list from DB
         for raw_item in raw_dataset:
             dataset_stored.append(pickle.loads(raw_item))  # load item from DB
+        current_app.logger.info(
+            f"Downloaded {len(dataset_stored)} items from the database."
+        )
         return dataset_stored
 
     ################# dataset has not been downloaded, downloading now #################
     current_app.logger.info("Downloading dataset.")
     url: str = "https://onu1.s2.chalmers.se/datasets/amazon_prime_titles.json"
     response = requests.get(url, timeout=200)
+    current_app.logger.info("Finished downloading dataset.")
 
     ########################## saving dataset to the database ##########################
     dataset_base: list[Show] = []  # list to store the items
@@ -87,6 +93,7 @@ def get_data_list() -> list[Show]:
         # push object to the database list
         db.rpush("dataset_list", pickle.dumps(new_show))
         dataset_base.append(new_show)  # append to the list
+    current_app.logger.info(f"Processed {len(dataset_base)} items.")
 
     return dataset_base
 
@@ -100,6 +107,8 @@ def calculate_statistics(dataset: list[Show]) -> dict[int, int]:
     counter: dict[int, int] = collections.defaultdict(lambda: 0)
     for item in dataset:
         counter[item.release_year] += 1
+
+    current_app.logger.info(f"The statistics have {len(counter)} items.")
 
     return counter
 
