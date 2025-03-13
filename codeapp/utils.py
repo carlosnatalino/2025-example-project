@@ -47,7 +47,11 @@ def get_data_list() -> list[Show]:
 
     data: list[dict[str, str]] = response.json()
 
-    for item in data:
+    for i, item in enumerate(data):
+
+        # use the line below to get detailed log messages
+        current_app.logger.info(f"Processing {i}/{len(data)} rows.")
+
         # check if the date can be parsed
         date_added: date | None = None
         try:
@@ -93,6 +97,8 @@ def get_data_list() -> list[Show]:
         # push object to the database list
         db.rpush("dataset_list", pickle.dumps(new_show))
         dataset_base.append(new_show)  # append to the list
+        # use the line below to get detailed log messages
+        current_app.logger.info(f"Processed {i}/{len(data)} rows.")
     current_app.logger.info(f"Processed {len(dataset_base)} items.")
 
     return dataset_base
