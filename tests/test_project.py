@@ -39,7 +39,7 @@ def test_models() -> None:
         + f"Expecting 1, got {num_dataclasses}."
     )
     if my_class is not None:
-        assert len(my_class.__dataclass_fields__) > num_fields, (
+        assert len(my_class.__dataclass_fields__) >= num_fields, (
             f"The number of fields should be at least {num_fields}. "
             + f"You have only {len(my_class.__dataclass_fields__)}."
         )
