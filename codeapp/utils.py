@@ -1,11 +1,12 @@
 # built-in imports
-from datetime import date, datetime
 import collections
 import pickle
+from datetime import date, datetime
+
+import requests
 
 # external imports
 from flask import current_app
-import requests
 
 # internal imports
 from codeapp import db

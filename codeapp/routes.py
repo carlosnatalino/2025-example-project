@@ -64,7 +64,7 @@ def data() -> Response:
 
     # generate the table
     html_table = tabulate(
-        dataset[0:1000],
+        [list(vars(show).values()) for show in dataset[0:100]],
         headers=[
             "ID",
             "Type",
